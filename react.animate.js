@@ -1,7 +1,7 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ease'], factory);
+    define(['ease-component'], factory);
   } else if (typeof exports === 'object') {
     module.exports = factory(require('ease-component'));
   } else {
