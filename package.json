@@ -1,0 +1,26 @@
+{
+  "name": "react.animate",
+  "version": "0.0.2",
+  "description": "A small mixin that adds state animation to React components.",
+  "main": "react.animate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pleasetrythisathome/react.animate.git"
+  },
+  "keywords": [
+    "ease",
+    "react"
+  ],
+  "author": "Dylan Butman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pleasetrythisathome/react.animate/issues"
+  },
+  "homepage": "https://github.com/pleasetrythisathome/react.animate",
+  "dependencies": {
+    "ease-component": "~1.0.0"
+  }
+}

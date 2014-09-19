@@ -1,12 +1,14 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['underscore', 'react', 'ease'], factory);
+    define(['ease'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('ease-component'));
   } else {
     // Browser globals
-    root.amdWeb = factory(root._, root.React, root.Ease);
+    root.amdWeb = factory(root.Ease);
   }
-}(this, function (_, React, Ease) {
+}(this, function (Ease) {
 
   var requestAnimationFrame = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
@@ -41,13 +43,19 @@
 
     delete animator.startState[property];
     delete animator.endState[property];
-
-    if (_.keys(animator.startState).length < 1) {
+    
+    var keys = [];
+    for (var key in animator.startState) if (obj.hasOwnProperty(key)) keys[keys.length] = key;
+    if (keys.length < 1) {
       animator.callback();
     }
   };
 
-  React.Animate = {
+  var identity = function(value) {
+    return value;
+  };
+
+  return Animate = {
 
     animate: function() {
       // Default parameters
@@ -58,29 +66,30 @@
         endState: {},
         duration: 500,
         ease: "cubic-in-out",
-        callback: _.identity,
+        callback: identity,
         component: this,
       };
 
       // Parameter parsing
       var argIter = 0;
-      if (_.isObject(arguments[argIter])) {
+      if (typeof arguments[argIter] === "object") {
         anim.endState = arguments[argIter++];
       } else {
-        anim.endState = _.object([arguments[argIter],
-                                  arguments[argIter + 1]]);
+        var obj = {};
+        obj[arguments[argIter]] = arguments[argIter + 1];
+        anim.endState = obj;
         argIter += 2;
       }
 
-      if (_.isNumber(arguments[argIter])) {
+      if (typeof arguments[argIter] === "number") {
         anim.duration = arguments[argIter++];
       }
 
-      if (_.isString(arguments[argIter])) {
+      if (typeof arguments[argIter] === "string") {
         anim.ease = arguments[argIter++];
       }
 
-      if (_.isFunction(arguments[argIter])) {
+      if (typeof arguments[argIter] === "function") {
         anim.callback = arguments[argIter++];
       }
 
@@ -101,7 +110,5 @@
       anim.animator = requestAnimationFrame(animator.bind(anim));
     }
   };
-
-  return React;
 
 }));
