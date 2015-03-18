@@ -26,7 +26,7 @@
     for (var i in this.startState) {
       newState[i] = this.startState[i] + (this.endState[i] - this.startState[i]) * easeFunc(alpha);
     }
-    this.component.setState(newState);
+    if (this.component.isMounted()) this.component.setState(newState);
 
     if (alpha >= 1) {
       for (var i in this.startState) {
